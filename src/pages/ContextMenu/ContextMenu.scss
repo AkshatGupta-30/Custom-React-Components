@@ -15,15 +15,13 @@ $img-size: 2.25rem;
 $name-width: 4rem;
 $font-size: 0.9rem;
 
-body {
-    background-color: #1f1f1f;
-    color: white;
-    width: 100vw;
-    height: 100vh;
+.custom-context-menu {
+    @include wh(100%, 85vh);
+    @include flexcenter(column);
+    gap: 3rem;
 }
 
 .parent {
-    @include wh(100%, 85vh);
     @include flexcenter(row);
     flex-wrap: wrap;
     gap: 2rem;

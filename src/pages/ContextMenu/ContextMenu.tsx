@@ -97,31 +97,34 @@ const ContextMenuItems: React.FC = () => {
 	return (
 		<>
 			<Header />
-			<div className={parentClassName} ref={parentRef}>
-				{contextMenuButtons.map((btn, index) => (
-					<div
-						key={index}
-						className={childClassName}
-						onContextMenu={(ev) => handleOnContextMenu(ev, index)}
-					>
-						<div className="img-wrapper">
-							<img
-								src={`https://icon.horse/icon/${btn.url}`}
-								alt=""
-								loading="lazy"
-								className="favicon"
-							/>
+			<div className="custom-context-menu">
+				<h1>Custom Context Menu</h1>
+				<div className={parentClassName} ref={parentRef}>
+					{contextMenuButtons.map((btn, index) => (
+						<div
+							key={index}
+							className={childClassName}
+							onContextMenu={(ev) => handleOnContextMenu(ev, index)}
+						>
+							<div className="img-wrapper">
+								<img
+									src={`https://icon.horse/icon/${btn.url}`}
+									alt=""
+									loading="lazy"
+									className="favicon"
+								/>
+							</div>
+							<div className="name">{btn.title}</div>
 						</div>
-						<div className="name">{btn.title}</div>
+					))}
+					<div ref={excludeRef} className="child">
+						<div className="img-wrapper">
+							<IoIosAdd className="add-icon" />
+						</div>
+						<div className="name">Add Site</div>
 					</div>
-				))}
-				<div ref={excludeRef} className="child">
-					<div className="img-wrapper">
-						<IoIosAdd className="add-icon" />
-					</div>
-					<div className="name">Add Site</div>
+					<ContextMenu contextRef={contextMenuRef} />
 				</div>
-				<ContextMenu contextRef={contextMenuRef} />
 			</div>
 		</>
 	);
