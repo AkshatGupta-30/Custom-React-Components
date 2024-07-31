@@ -17,7 +17,7 @@ const defaultContextMenu = {
 	toggled: false,
 };
 
-const ContextMenuItems: React.FC = () => {
+const CustomContextMenu: React.FC = () => {
 	const contextMenuRef = useRef<HTMLUListElement>(null);
 	const excludeRef = useRef<HTMLDivElement>(null);
 	const parentRef = useRef<HTMLDivElement>(null);
@@ -130,4 +130,4 @@ const ContextMenuItems: React.FC = () => {
 	);
 };
 
-export default ContextMenuItems;
+export default CustomContextMenu;
