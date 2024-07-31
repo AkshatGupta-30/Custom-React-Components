@@ -1,0 +1,17 @@
+.header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #313131;
+    padding: 1rem;
+    font-size: 2rem;
+    color: #fff;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-decoration: none;
+
+    &:hover {
+        background-color: #414141;
+    }
+}

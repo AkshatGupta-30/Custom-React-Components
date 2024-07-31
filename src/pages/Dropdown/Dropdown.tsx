@@ -1,5 +1,12 @@
+import Header from "../../components/Header/Header";
+
 const Dropdown: React.FC = () => {
-	return <h1>Dropdown</h1>;
+	return (
+		<>
+			<Header />
+			<h1>Dropdown</h1>
+		</>
+	);
 };
 
 export default Dropdown;
