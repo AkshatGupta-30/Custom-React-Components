@@ -1,0 +1,13 @@
+{
+    "tabWidth": 4,
+    "useTabs": true,
+    "arrowParens": "always",
+    "bracketSameLine": false,
+    "bracketSpacing": true,
+    "experimentalTernaries": true,
+    "htmlWhitespaceSensitivity": "ignore",
+    "parser": "babel-ts",
+    "printWidth": 90,
+    "semi": true,
+    "trailingComma": "all"
+}
