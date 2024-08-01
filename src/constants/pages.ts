@@ -1,6 +1,7 @@
 import IPage from "../interface/IPage";
 import CustomContextMenu from "../pages/ContextMenu/ContextMenu";
 import CustomDropdown from "../pages/Dropdown/Dropdown";
+import CustomHoverCard from "../pages/HoverCard/HoverCard";
 import SecretsEnvVars from "../pages/SecretsEnvVars/SecretsEnvVars";
 
 const CPages: IPage[] = [
@@ -18,6 +19,11 @@ const CPages: IPage[] = [
 		name: "Secrets and Env Variables",
 		path: "/secrets-env-vars",
 		component: SecretsEnvVars,
+	},
+	{
+		name: "Hover Card",
+		path: "/hover-card",
+		component: CustomHoverCard,
 	},
 ];
 
