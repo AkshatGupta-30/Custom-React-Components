@@ -1,6 +1,7 @@
 import IPage from "../interface/IPage";
 import CustomContextMenu from "../pages/ContextMenu/ContextMenu";
 import CustomDropdown from "../pages/Dropdown/Dropdown";
+import SecretsEnvVars from "../pages/SecretsEnvVars/SecretsEnvVars";
 
 const CPages: IPage[] = [
 	{
@@ -12,6 +13,11 @@ const CPages: IPage[] = [
 		name: "Dropdown",
 		path: "/dropdown",
 		component: CustomDropdown,
+	},
+	{
+		name: "Secrets and Env Variables",
+		path: "/secrets-env-vars",
+		component: SecretsEnvVars,
 	},
 ];
 

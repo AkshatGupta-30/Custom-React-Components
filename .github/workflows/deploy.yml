@@ -23,6 +23,9 @@ jobs:
                   working-directory: ./
 
             - name: Build project
+              env:
+                VITE_SECRETS: ${{secrets.VITE_SECRETS}}
+                VITE_ENVVARS: ${{vars.VITE_ENVVARS}}
               run: yarn build
 
             - name: Upload production-ready build files
