@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { RefObject, useEffect, useRef, useState } from "react";
 import Header from "../../components/Header/Header";
-import "./HoverCard.scss";
+import "./FloatingCard.scss";
 
 const buttons = [
 	{ title: "Github", url: "github.com" },
@@ -10,42 +10,41 @@ const buttons = [
 	{ title: "Instagram", url: "instagram.com" },
 ];
 
-const defaultHoverCard = {
+const defaultFloatCardFeat = {
 	x: 0,
 	y: 0,
 	toggled: false,
 };
 
-const HoverCard = ({
-	hoverCard,
-	hoverRef,
+const FloatCard = ({
+	floatCard,
+	floatRef,
 	index,
 }: {
-	hoverCard: typeof defaultHoverCard;
-	hoverRef: RefObject<HTMLDivElement>;
+	floatCard: typeof defaultFloatCardFeat;
+	floatRef: RefObject<HTMLDivElement>;
 	index: number;
 }) => {
 	return (
 		<div
-			ref={hoverRef}
+			ref={floatRef}
 			style={{
-				top: `${hoverCard.y + 2}px`,
-				left: `${hoverCard.x + 2}px`,
+				top: `${floatCard.y + 2}px`,
+				left: `${floatCard.x + 2}px`,
 			}}
-			className={`hover-card ${hoverCard.toggled ? "active" : null}`}
+			className={`float-card ${floatCard.toggled ? "active" : null}`}
 		>
 			<h3>{index !== -1 && buttons[index].url}</h3>
 		</div>
 	);
 };
 
-const CustomHoverCard: React.FC = () => {
-	const hoverCardRef = useRef<HTMLDivElement>(null);
-	const parentRef = useRef<HTMLDivElement>(null);
-	const [hoverCard, setHoverCard] = useState(defaultHoverCard);
+const CustomFloatingCard: React.FC = () => {
+	const floatCardRef = useRef<HTMLDivElement>(null);
+	const [card, setCard] = useState(defaultFloatCardFeat);
 	const [index, setIndex] = useState<number>(-1);
 	const latestMousePos = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
-	let hoverTimeout: NodeJS.Timeout;
+	let floatTimeout: NodeJS.Timeout;
 
 	const parentClassName = "parent";
 	const childClassName = "child";
@@ -55,25 +54,28 @@ const CustomHoverCard: React.FC = () => {
 		i: number,
 	) => {
 		ev.preventDefault();
-		hoverTimeout = setTimeout(() => {
-			if (hoverCardRef.current) {
-				const hoveredCard = document.getElementsByClassName(childClassName)[i];
-				const hoveredCardAttr = hoveredCard.getBoundingClientRect();
-				const hoverCardAttr = hoverCardRef.current.getBoundingClientRect();
-				const isLeft = ev.clientX + hoverCardAttr.width < window?.innerWidth;
+		floatTimeout = setTimeout(() => {
+			if (floatCardRef.current) {
+				const childCurrentCard =
+					document.getElementsByClassName(childClassName)[i];
+				const childCurrentCardAttr = childCurrentCard.getBoundingClientRect();
+				const floatCardAttr = floatCardRef.current.getBoundingClientRect();
+				const isLeft = ev.clientX + floatCardAttr.width < window?.innerWidth;
 				const isTop =
-					hoveredCardAttr.y + hoveredCardAttr.height + hoverCardAttr.height >
+					childCurrentCardAttr.y +
+						childCurrentCardAttr.height +
+						floatCardAttr.height >
 					window?.innerHeight;
 				console.log(isTop);
 
 				setIndex(i);
-				setHoverCard({
+				setCard({
 					x: isLeft
 						? latestMousePos.current.x
-						: latestMousePos.current.x - hoverCardAttr.width,
+						: latestMousePos.current.x - floatCardAttr.width,
 					y: isTop
-						? hoveredCardAttr.y - hoverCardAttr.height - 5
-						: hoveredCardAttr.y + hoveredCardAttr.height + 2,
+						? childCurrentCardAttr.y - floatCardAttr.height - 5
+						: childCurrentCardAttr.y + childCurrentCardAttr.height + 2,
 					toggled: true,
 				});
 			}
@@ -82,9 +84,9 @@ const CustomHoverCard: React.FC = () => {
 
 	const handleOnLeave = (ev: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
 		ev.preventDefault();
-		clearTimeout(hoverTimeout);
+		clearTimeout(floatTimeout);
 		setIndex(-1);
-		setHoverCard(defaultHoverCard);
+		setCard(defaultFloatCardFeat);
 	};
 
 	useEffect(() => {
@@ -98,9 +100,9 @@ const CustomHoverCard: React.FC = () => {
 	return (
 		<>
 			<Header />
-			<div className="custom-hover-card">
-				<h1>Custom Hover Card</h1>
-				<div className={parentClassName} ref={parentRef}>
+			<div className="custom-float-card">
+				<h1>Custom Floating Card</h1>
+				<div className={parentClassName}>
 					{buttons.map((btn, i) => (
 						<div
 							key={i}
@@ -119,15 +121,11 @@ const CustomHoverCard: React.FC = () => {
 							<div className="name">{btn.title}</div>
 						</div>
 					))}
-					<HoverCard
-						hoverCard={hoverCard}
-						hoverRef={hoverCardRef}
-						index={index}
-					/>
+					<FloatCard floatCard={card} floatRef={floatCardRef} index={index} />
 				</div>
 			</div>
 		</>
 	);
 };
 
-export default CustomHoverCard;
+export default CustomFloatingCard;

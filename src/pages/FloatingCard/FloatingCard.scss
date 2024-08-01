@@ -15,7 +15,7 @@ $img-size: 2.25rem;
 $name-width: 4rem;
 $font-size: 0.9rem;
 
-.custom-hover-card {
+.custom-float-card {
     @include wh(100%, 85vh);
     @include flexcenter(column);
     gap: 3rem;
@@ -67,7 +67,7 @@ $font-size: 0.9rem;
     }
 }
 
-.hover-card {
+.float-card {
     visibility: hidden;
     opacity: 0;
     position: fixed;
