@@ -1,59 +1,95 @@
-import React from "react";
+import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react";
 import Header from "../../components/Header/Header";
 import "./Dropdown.scss";
+import { FaCaretDown } from "react-icons/fa6";
 
-const CustomDropdown: React.FC = () => {
-	const Dropdown = React.memo(() => {
-		const [isOpen, setIsOpen] = React.useState<boolean>(false);
-		const dropdownRef: React.MutableRefObject<HTMLDivElement | null> =
-			React.useRef<HTMLDivElement | null>(null);
+const CustomDropdown: FC = () => {
+	const [selected, setSelected] = useState<number>(0);
 
-		const toggleDropdown = () => {
-			setIsOpen(!isOpen);
-		};
+	const DropdownMenu = ({
+		btnTitle,
+		ddList,
+		selected,
+		setSelected,
+	}: {
+		btnTitle: string;
+		ddList: string[];
+		selected: number;
+		setSelected: Dispatch<SetStateAction<number>>;
+	}) => {
+		const [isOpen, setIsOpen] = useState<boolean>(false);
+		const dropdownRef = useRef<HTMLDivElement>(null);
+		const btnRef = useRef<HTMLButtonElement>(null);
 
-		React.useEffect(() => {
-			const handler = (event: Event) => {
-				console.log("Handler");
+		const toggleDropdown = () => setIsOpen(!isOpen);
+
+		useEffect(() => {
+			const handler = (ev: Event) => {
 				if (
 					dropdownRef.current &&
-					!dropdownRef.current.contains(event.target as Node)
+					!dropdownRef.current.contains(ev.target as Node)
 				) {
 					setIsOpen(false);
 				}
 			};
 
 			document.addEventListener("click", handler);
-
 			return () => {
 				document.removeEventListener("click", handler);
 			};
 		}, []);
 
+		useEffect(() => {
+			setIsOpen(false);
+		}, [selected]);
+
+		function getTop(): number {
+			let top = 0;
+			if (btnRef.current) {
+				const btnAttr = btnRef.current.getBoundingClientRect();
+				top = btnAttr.height + 5;
+			}
+			return top;
+		}
+
 		return (
 			<div className="dropdown" ref={dropdownRef}>
 				<button
+					ref={btnRef}
 					onClick={toggleDropdown}
 					className={`dd-button ${isOpen ? "btn-open" : null}`}
 				>
-					Languages
+					<span>{btnTitle}</span>
+					<FaCaretDown className="icon" />
 				</button>
-				<div className={`dd-content ${isOpen ? "content-open" : null}`}>
-					<li className="item">C</li>
-					<li className="item">C++</li>
-					<li className="item">Python</li>
-					<li className="item">Javascript</li>
-					<li className="item">Dart</li>
+				<div
+					className={`dd-content ${isOpen ? "content-open" : null}`}
+					style={{ top: getTop() }}
+				>
+					{ddList.map((item: string, i: number) => (
+						<li
+							key={i}
+							className={`item ${selected === i ? "selected" : null}`}
+							onClick={() => setSelected(i)}
+						>
+							{item}
+						</li>
+					))}
 				</div>
 			</div>
 		);
-	});
+	};
 
 	return (
 		<>
 			<Header />
 			<div className="custom-dropdown">
-				<Dropdown />
+				<DropdownMenu
+					btnTitle="Sort By"
+					ddList={["A-Z", "Z-A", "Recent Visited", "Mostly Visited"]}
+					selected={selected}
+					setSelected={setSelected}
+				/>
 				<h1>Custom Dropdown</h1>
 				<h3>
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit,

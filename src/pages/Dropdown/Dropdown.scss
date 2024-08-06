@@ -25,32 +25,63 @@
 	position: relative;
 
 	.dd-button {
+		display: inline-flex;
+		text-align: center;
+		align-items: center;
+		gap: 0.25rem;
 		outline: none;
-		font-size: 1.2rem;
-		background-color: white;
-		border: 1px solid black;
+		font-size: 1.1rem;
+		font-weight: 700;
+		color: #eceef2;
 		padding: 0.5rem 1rem;
-		border-radius: 12px;
+		background: rgba($color: #3b4351, $alpha: 0.75);
+		box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+		backdrop-filter: blur( 7px );
+		-webkit-backdrop-filter: blur( 7px );
+		border-radius: 0;
+		border: 1px solid rgba($color: #ffffff, $alpha: 0.18);
 		cursor: pointer;
 
+		
+		&:hover {
+			border-color: rgba($color: #ffffff, $alpha: 0.54);
+		}
+		
 		&::-webkit-scrollbar {
 			width: 0;
 			height: 0;
 		}
-
+		
 		&.btn-open {
-			border: rgb(147, 197, 253) 2px solid;
+			border-color: rgba($color: #ffffff, $alpha: 0.6);
+
+			.icon {
+				transform: rotate(0deg);
+			}
 		}
 	}
 
+	.selected-text {
+		color: #f6f7f9;
+		font-size: 1.2rem;
+	}
+	
+	.icon {
+		transform: rotate(-90deg);
+		transition: transform 100ms ease-in-out;
+	}
+
 	.dd-content {
+		position: absolute;
 		list-style: none;
 		display: flex;
 		flex-direction: column;
 		align-items: start;
 		justify-content: start;
 		width: 100%;
-		box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+		background-color: #3b4351;
+		color: #f6f7f9;
+		border: 1px solid rgba($color: #ffffff, $alpha: 0.6);
 		max-height: 40vh;
 		overflow-y: scroll;
 		scrollbar-width: none;
@@ -65,17 +96,21 @@
 			opacity: 1;
 			pointer-events: all;
 		}
+	}
 
-		.item {
-			width: 100%;
-			padding: 0.5rem;
-			margin: 0.1rem;
-			border-radius: 0.5rem;
-			cursor: pointer;
+	.item {
+		width: 100%;
+		padding: 0.5rem 0.85rem;
+		text-transform: capitalize;
+		cursor: pointer;
 
-			&:hover {
-				background-color: rgb(240, 249, 255);
-			}
+		&.selected {
+			background-color: rgba($color: #68788f, $alpha: 0.5);
+			pointer-events: none;
+		}
+
+		&:hover {
+			background-color: rgba($color: #68788f, $alpha: 0.25);
 		}
 	}
 }
